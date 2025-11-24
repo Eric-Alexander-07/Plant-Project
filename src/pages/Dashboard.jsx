@@ -1,7 +1,8 @@
 // Dashboard.jsx - Seite mit strukturierten Bereichen und Dummy-Sensordaten.
 // Hier werden spaeter Echtzeitdaten, Filter (Standort/Zeitraum) und Live-Updates eingebunden.
-import MoistureChart from '../components/MoistureChart.jsx'
+import ChartPlaceholder from '../components/ChartPlaceholder.jsx'
 import SensorCard from '../components/SensorCard.jsx'
+import MoistureChart from '../components/MoistureChart.jsx'
 
 const dummySensors = [
   {
@@ -72,6 +73,7 @@ const Dashboard = () => {
             Historische Verlaeufe folgen nach Auswahl der Chart-Bibliothek.
           </p>
         </header>
+        <ChartPlaceholder />
         <MoistureChart />
       </section>
     </section>
