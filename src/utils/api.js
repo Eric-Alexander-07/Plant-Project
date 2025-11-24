@@ -1,13 +1,15 @@
-// api.js - Platzhalter für API-Konfiguration und Endpunkte.
-export const API_BASE_URL = '' // Wird gesetzt, sobald Backend-URL bekannt ist.
+// api.js - zentraler Platz fuer spaetere API-Konfigurationen und Endpunkte.
+// Alle Werte stammen aus Vite-Environment-Variablen (.env / .env.example).
 
-export const defaultHeaders = {
-  // Beispiel: Authorization, Content-Type usw. werden später hinzugefügt.
+export const API_CONFIG = {
+  baseUrl: import.meta.env.VITE_API_BASE_URL,
+  defaultLocation: import.meta.env.VITE_DEFAULT_LOCATION_NAME,
+  lat: import.meta.env.VITE_DEFAULT_LAT,
+  lon: import.meta.env.VITE_DEFAULT_LON,
 }
 
-const apiConfig = {
-  baseUrl: API_BASE_URL,
-  headers: defaultHeaders,
+export const DEFAULT_HEADERS = {
+  // Beispiel: Authorization, Content-Type usw. werden spaeter hinzugefuegt.
 }
 
-export default apiConfig
+// Weitere Helper (z.B. Pfadbuilder, Client-Instanzen) kommen hier hinzu, sobald das Backend steht.

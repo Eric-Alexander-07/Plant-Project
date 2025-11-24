@@ -1,34 +1,40 @@
 # Plant Project Frontend (React + Vite)
+Schlankes, erweiterbares Frontend-Grundgeruest fuer ein Sensor-Dashboard. Keine Business-Logik, nur Struktur, Dummy-Daten und dokumentierte Platzhalter.
 
-Schlankes Grundgerüst für ein schulisches Sensor-Dashboard.
-
-## Installation
+## Schnellstart
 - `npm install`
+- `.env` aus `.env.example` kopieren und Werte anpassen.
+- `npm run dev` (Vite startet den Dev-Server; URL aus dem Terminal oeffnen).
 
-## Entwicklung starten
-- `npm run dev` und im Browser den ausgegebenen Localhost-Link öffnen.
+## Environment (.env)
+- Datei: `.env` (Basis in `.env.example`)
+- Variablen:
+  - `VITE_API_BASE_URL` - Backend-URL (z.B. http://localhost:4000/api)
+  - `VITE_DEFAULT_LOCATION_NAME` - Standard-Standortname
+  - `VITE_DEFAULT_LAT` / `VITE_DEFAULT_LON` - Geo-Koordinaten des Standard-Standorts
+- Nutzung im Code: `import.meta.env.VITE_*` (siehe `src/utils/api.js`).
 
-## Projektstruktur
-- `src/App.jsx` – Routing-Einstieg mit Layout-Wrap und Dashboard-Route.
-- `src/main.jsx` – React-Bootstrapper inkl. globalem CSS-Import.
-- `src/components/` – wiederverwendbare Bausteine (`Layout`, `SensorCard`).
-- `src/pages/` – Seitenansichten (`Dashboard` mit Dummy-Daten).
-- `src/hooks/` – eigene Hooks (`useFetch` als Skelett).
-- `src/utils/` – Hilfen und Konfiguration (`api.js` als Platzhalter für Basis-URL und Header).
-- `src/styles/` – globale Styles (`base.css` mit Grundlayout).
+## Ordnerstruktur
+- `src/App.jsx` - Router-Einstieg, Layout-Wrap, Dashboard-Route.
+- `src/main.jsx` - React-Bootstrapper, bindet globale Styles.
+- `src/components/` - Bausteine (`Layout`, `SensorCard`, `ChartPlaceholder`).
+- `src/pages/` - Seiten (`Dashboard` mit Dummy-Sensoren).
+- `src/hooks/` - Hook-Skelette (`useFetch` ohne Logik).
+- `src/utils/` - Konfiguration (`api.js` liest .env-Werte).
+- `src/styles/` - Grundstyles (`base.css` mit Layout-, Grid- und Ampel-Klassen).
 
-## Erweiterung
-- Neue Seiten: unter `src/pages/` anlegen und im Router (`App.jsx`) registrieren.
-- Weitere Komponenten: nach Bedarf in `src/components/` hinzufügen.
-- Styling: `src/styles/base.css` erweitern oder modulare CSS-Dateien pro Komponente ergänzen.
-- Datenquellen: `useFetch` mit echter Fetch-/Axios-Logik befüllen und Fehler/Loading-State ergänzen.
+## Erweiterungsoptionen (Ideen)
+- Charts: `ChartPlaceholder` durch ChartJS/Recharts/ECharts ersetzen; Zeitfilter ergaenzen.
+- API: In `api.js` Basis-URL/Headers pflegen, `useFetch` mit echter Fetch-/Axios-Logik ausbauen.
+- Sensorlogik: Live-Daten, WebSockets/Polling, Fehler- und Ladezustaende in `SensorCard`.
+- Zusatzdaten: Wetter-API, Historie/Trends, Export-Funktionen.
 
-## API-Anbindung (später)
-- `src/utils/api.js`: `API_BASE_URL` setzen und Standard-Header definieren.
-- `useFetch`: Requests gegen `API_BASE_URL` absetzen, Auth-Header einbinden, Caching/Retry planen.
-- Fehler- und Ladezustände im UI anzeigen (Skeletons oder Status-Badges in `SensorCard`).
+## Start und Entwicklung
+- Dev: `npm run dev`
+- Build: `npm run build`
+- Preview: `npm run preview`
 
-## Team-Struktur (Platzhalter)
+## Team / Aufgabenverteilung (Platzhalter)
 - Product/Didaktik: TODO
 - Frontend: TODO
 - Backend/IoT: TODO

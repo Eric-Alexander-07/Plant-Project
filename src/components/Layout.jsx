@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
       <header className="app-header">
         <div className="brand">Plant Project</div>
         <nav className="app-nav">
-          {/* Platz für Navigation oder Statusindikatoren */}
+          {/* Platz fuer Navigation oder Statusindikatoren */}
           <span className="app-nav__placeholder">Navigation folgt</span>
         </nav>
       </header>
@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
       <main className="app-main">{children}</main>
 
       <footer className="app-footer">
-        {/* Footer bleibt minimal, wird später durch Projektinfos ersetzt */}
+        {/* Footer bleibt minimal, wird spaeter durch Projektinfos ersetzt */}
         <span>Footer-Platzhalter</span>
       </footer>
     </div>

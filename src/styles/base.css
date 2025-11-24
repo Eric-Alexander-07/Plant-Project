@@ -1,4 +1,4 @@
-/* base.css - Minimaler Style-Rahmen für Layout und Platzhalter. */
+/* base.css - Minimaler Style-Rahmen fuer Layout und Platzhalter. */
 :root {
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
@@ -98,12 +98,58 @@ a {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.sensor-card {
+.panel {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1rem;
+}
+
+.panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.panel__hint {
+  margin: 0;
+  color: #52616d;
+  font-size: 0.95rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.sensor-card {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.sensor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.sensor--green {
+  border-left: 6px solid #38a169;
+}
+
+.sensor--yellow {
+  border-left: 6px solid #d69e2e;
+}
+
+.sensor--red {
+  border-left: 6px solid #e53e3e;
 }
 
 .sensor-card__header {
@@ -118,9 +164,23 @@ a {
   font-size: 1.1rem;
 }
 
-.sensor-card__status {
-  font-size: 0.9rem;
-  color: #52616d;
+.sensor-card__indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sensor--green .sensor-card__indicator {
+  color: #38a169;
+}
+
+.sensor--yellow .sensor-card__indicator {
+  color: #d69e2e;
+}
+
+.sensor--red .sensor-card__indicator {
+  color: #e53e3e;
 }
 
 .sensor-card__value {
@@ -133,4 +193,85 @@ a {
   margin: 0;
   font-size: 0.95rem;
   color: #52616d;
+}
+
+.chart-placeholder {
+  padding: 1rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+}
+
+.chart-placeholder__title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.chart-placeholder__hint {
+  margin: 0;
+  color: #52616d;
+}
+
+/* Chart-spezifische Erweiterungen */
+.chart-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.chart-range-buttons {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.chart-range-buttons button {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.chart-range-buttons button:hover {
+  border-color: #94a3b8;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 0 0 0.5rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+}
+
+.dot-green {
+  background: #38a169;
+}
+
+.dot-yellow {
+  background: #d69e2e;
+}
+
+.dot-red {
+  background: #e53e3e;
 }
