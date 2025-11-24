@@ -1,5 +1,5 @@
-// Dashboard.jsx - Seite mit strukturierten Bereichen und Dummy-Sensordaten.
-// Hier werden spaeter Echtzeitdaten, Filter (Standort/Zeitraum) und Live-Updates eingebunden.
+// Dashboard.jsx - Landing-Page mit Dummy-Sensordaten und Platzhaltern fuer Charts/Wetter.
+// Gliedert Bereiche in Status, Beet-Auswahl, Sensor-Grid, Diagramme und Wetterkarten.
 import ChartPlaceholder from '../components/ChartPlaceholder.jsx'
 import SensorCard from '../components/SensorCard.jsx'
 import MoistureChart from '../components/MoistureChart.jsx'
@@ -44,6 +44,7 @@ const Dashboard = () => {
         </p>
       </header>
 
+      {/* Kurzer Snapshot ueber Kennzahlen */}
       <section className="status-strip">
         <article className="status-chip">
           <p className="status-chip__label">Gesamtstatus</p>
@@ -59,6 +60,7 @@ const Dashboard = () => {
         </article>
       </section>
 
+      {/* Platz fuer spaetere Beet-/Standort-Auswahl */}
       <section className="panel selection-panel">
         <h2>Beet-Auswahl</h2>
         <p className="panel__hint">
@@ -67,6 +69,7 @@ const Dashboard = () => {
         </p>
       </section>
 
+      {/* Sensor-Karten mit Ampel-Status */}
       <section className="panel">
         <header className="panel__header">
           <h2>Sensor Overview</h2>
@@ -88,6 +91,7 @@ const Dashboard = () => {
         </div>
       </section>
 
+      {/* Diagramm-Bereich: aktuell Platzhalter + Dummy-Recharts-Chart */}
       <section className="panel">
         <header className="panel__header">
           <h2>Diagramme</h2>
@@ -100,6 +104,7 @@ const Dashboard = () => {
         <MoistureChart />
       </section>
 
+      {/* Wetter-Karten als kurzer Forecast-Block */}
       <section className="panel">
         <header className="panel__header">
           <h2>Wetter & Regen</h2>
@@ -116,7 +121,9 @@ const Dashboard = () => {
           <article className="weather-card">
             <p className="weather-card__label">Temperatur</p>
             <p className="weather-card__value">{statusSnapshot.temp}&deg;C</p>
-            <p className="weather-card__note">Leicht bewölkt, gute Bedingungen fuer Bewässerung.</p>
+            <p className="weather-card__note">
+              Leicht bewoelkt, gute Bedingungen fuer Bewaesserung.
+            </p>
           </article>
           <article className="weather-card">
             <p className="weather-card__label">Wind</p>

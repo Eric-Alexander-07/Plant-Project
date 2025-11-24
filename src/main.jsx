@@ -1,4 +1,4 @@
-// main.jsx - Bindet React an den DOM und lädt globale Styles.
+// main.jsx - Mountet React in den DOM und laedt globale Styles.
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'

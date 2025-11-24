@@ -1,6 +1,5 @@
-// ChartPlaceholder.jsx - Wrapper fuer kuenftige Diagramm-Bibliotheken.
-// Hier koennen spaeter ChartJS, Recharts oder ECharts integriert werden.
-// Filter (Zeitraum von/bis) werden ebenfalls hier angebunden.
+// ChartPlaceholder.jsx - Platzhalter fuer spaetere Diagramm-Bibliothek (Recharts/ChartJS/ECharts).
+// Wird entfernt, sobald echte API-gebundene Charts integriert sind.
 const ChartPlaceholder = () => {
   return (
     <section className="chart-placeholder">

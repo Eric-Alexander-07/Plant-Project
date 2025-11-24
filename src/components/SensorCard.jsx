@@ -1,4 +1,5 @@
-// SensorCard.jsx - Zeigt Bodenfeuchte mit Ampel-Indikator (Dummy-Daten).
+// SensorCard.jsx - Einzelne Sensor-Kachel mit Ampel-Status und Zeitstempel.
+// getMoistureClass mappt die Prozentwerte auf die CSS-Klassen (gruen/gelb/rot).
 const getMoistureClass = (value) => {
   if (value >= 50) return 'sensor--green'
   if (value >= 30) return 'sensor--yellow'

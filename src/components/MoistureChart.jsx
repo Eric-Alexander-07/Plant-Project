@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import moistureData from '../mock/moistureData.js'
 
+// Kurzer Formatter fuer Monats/Tag-Achse (z.B. 11/24)
 const formatDate = (value) => {
   const date = new Date(value)
   return `${date.getMonth() + 1}/${date.getDate()}`
@@ -52,6 +53,7 @@ const MoistureChart = () => {
             labelFormatter={(value) => `Datum: ${new Date(value).toLocaleString()}`}
             formatter={(value) => [`${value}%`, 'Feuchtigkeit']}
           />
+          {/* Referenzbereiche fuer Ampel (oben Gruen, Mitte Gelb, unten Rot) */}
           <ReferenceArea y1={50} y2={100} fill="#d9f0e1" fillOpacity={0.7} />
           <ReferenceArea y1={30} y2={49} fill="#fbf0d5" fillOpacity={0.75} />
           <ReferenceArea y1={0} y2={29} fill="#f7e1d9" fillOpacity={0.8} />
