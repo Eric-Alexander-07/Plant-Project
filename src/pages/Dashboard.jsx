@@ -1,29 +1,8 @@
 // Dashboard.jsx - Landing-Page mit Dummy-Sensordaten und Platzhaltern fuer Charts/Wetter.
-// Gliedert Bereiche in Status, Beet-Auswahl, Sensor-Grid, Diagramme und Wetterkarten.
+// Gliedert Bereiche in Status, Beet-Auswahl (als Sensoren), Diagramme und Wetterkarten.
 import ChartPlaceholder from '../components/ChartPlaceholder.jsx'
-import SensorCard from '../components/SensorCard.jsx'
 import MoistureChart from '../components/MoistureChart.jsx'
-
-const dummySensors = [
-  {
-    id: 'sensor-1',
-    name: 'Bodenfeuchte Nord',
-    moisturePercent: 56,
-    timestamp: '2025-11-24T09:15:00Z',
-  },
-  {
-    id: 'sensor-2',
-    name: 'Bodenfeuchte Sued',
-    moisturePercent: 28,
-    timestamp: '2025-11-24T09:15:00Z',
-  },
-  {
-    id: 'sensor-3',
-    name: 'Bodenfeuchte West',
-    moisturePercent: 44,
-    timestamp: '2025-11-24T09:15:00Z',
-  },
-]
+import GardenBedCard from '../components/GardenBedCard.jsx'
 
 const statusSnapshot = {
   overall: 'Stabil',
@@ -33,15 +12,60 @@ const statusSnapshot = {
   wind: 9,
 }
 
+const gardenBeds = [
+  {
+    id: 'bed-1',
+    name: 'Kuechenbeet Nord',
+    crop: 'Salate & Kraeuter',
+    status: 'Optimal',
+    moisture: 62,
+    sunlight: 'Halbschatten',
+    nextTask: 'Leichte Bewaesserung heute Abend',
+    image:
+      'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'bed-2',
+    name: 'Tomatenhaus',
+    crop: 'Cocktail- und Roma-Tomaten',
+    status: 'Leicht trocken',
+    moisture: 38,
+    sunlight: 'Viel Sonne',
+    nextTask: 'Tropfbewaesserung fuer 20 Min. starten',
+    image:
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'bed-3',
+    name: 'Wurzelbeet',
+    crop: 'Karotten & Rote Bete',
+    status: 'Achtung: trocken',
+    moisture: 24,
+    sunlight: 'Halbschatten',
+    nextTask: 'Grosszuegig giessen und mulchen',
+    image:
+      'https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'bed-4',
+    name: 'Suedhang',
+    crop: 'Lavendel & Blumenwiese',
+    status: 'Stabil',
+    moisture: 57,
+    sunlight: 'Volle Sonne',
+    nextTask: 'Unkraut checken, Blueden beschneiden',
+    image:
+      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+  },
+]
+
 const Dashboard = () => {
   return (
     <section className="page dashboard">
       <header className="page__header">
         <p className="eyebrow">Uebersicht</p>
-        <h1>Sensor-Dashboard</h1>
-        <p className="lede">
-          Aktueller Stand der Bodenfeuchte (Dummy-Daten). API-/Live-Integration folgt.
-        </p>
+        <h1>Beet-Status</h1>
+        <p className="lede">Jedes Beet enthaelt einen Sensor. Hier die aktuellen Zustands-Snapshots.</p>
       </header>
 
       {/* Kurzer Snapshot ueber Kennzahlen */}
@@ -62,30 +86,22 @@ const Dashboard = () => {
 
       {/* Platz fuer spaetere Beet-/Standort-Auswahl */}
       <section className="panel selection-panel">
-        <h2>Beet-Auswahl</h2>
+        <h2>Beete & Sensoren</h2>
         <p className="panel__hint">
           {/* Hier kommen spaeter Standort-/Beet-Filter, Dropdowns und Suchfelder hin. */}
           Waehle ein Beet oder Standort (noch ohne Logik).
         </p>
-      </section>
-
-      {/* Sensor-Karten mit Ampel-Status */}
-      <section className="panel">
-        <header className="panel__header">
-          <h2>Sensor Overview</h2>
-          <p className="panel__hint">
-            {/* Realtime-Updates und Filter (z.B. nur kritische Sensoren) werden hier ergaenzt. */}
-            Ampel-Farben zeigen die aktuelle Bodenfeuchte-Kategorie.
-          </p>
-        </header>
-
-        <div className="dashboard-grid">
-          {dummySensors.map((sensor) => (
-            <SensorCard
-              key={sensor.id}
-              name={sensor.name}
-              moisturePercent={sensor.moisturePercent}
-              timestamp={sensor.timestamp}
+        <div className="bed-grid">
+          {gardenBeds.map((bed) => (
+            <GardenBedCard
+              key={bed.id}
+              name={bed.name}
+              crop={bed.crop}
+              status={bed.status}
+              moisture={bed.moisture}
+              sunlight={bed.sunlight}
+              nextTask={bed.nextTask}
+              image={bed.image}
             />
           ))}
         </div>
