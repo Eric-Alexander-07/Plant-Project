@@ -3,6 +3,7 @@
 import ChartPlaceholder from '../components/ChartPlaceholder.jsx'
 import MoistureChart from '../components/MoistureChart.jsx'
 import GardenBedCard from '../components/GardenBedCard.jsx'
+import useWeather from '../hooks/useWeather'
 
 const statusSnapshot = {
   overall: 'Stabil',
@@ -60,6 +61,69 @@ const gardenBeds = [
 ]
 
 const Dashboard = () => {
+  const { data: weather, isLoading: weatherLoading, error: weatherError } = useWeather()
+  const rainChanceValue = weather
+    ? Math.round(weather.maxPrecip24h ?? weather.precipitationProbability)
+    : statusSnapshot.rainChance
+
+  const minutesSinceUpdate = weather
+    ? Math.max(
+        0,
+        Math.round((Date.now() - new Date(weather.timestamp).getTime()) / 60000)
+      )
+    : null
+
+  const formatNumber = (value, digits = 1) =>
+    Number.isFinite(value) ? value.toFixed(digits) : '\u2013'
+
+  const formatWithUnit = (value, unit, digits = 1) =>
+    Number.isFinite(value) ? `${value.toFixed(digits)} ${unit}` : '\u2013'
+
+  const weatherCards = weather
+    ? [
+        {
+          label: 'Regen (naechste 24h)',
+          value: formatWithUnit(weather.maxPrecip24h, '%', 0),
+          note: 'Max. Regenwahrscheinlichkeit 24h',
+        },
+        {
+          label: 'Niederschlag',
+          value: formatWithUnit(weather.precipitationMm, 'mm', 2),
+          note: 'Letzte Stunde',
+        },
+        {
+          label: 'Temperatur',
+          value: formatWithUnit(weather.temperatureC, '\u00b0C', 1),
+          note: 'Aktuell',
+        },
+        {
+          label: 'Sonneneinstrahlung',
+          value: formatWithUnit(weather.shortwaveRadiation, 'W/m\u00b2', 0),
+          note: 'Zuletzt gemessen',
+        },
+        {
+          label: 'Luftfeuchtigkeit',
+          value: formatWithUnit(weather.humidityPercent, '%', 0),
+          note: 'Relative Feuchte',
+        },
+        {
+          label: 'Windgeschwindigkeit',
+          value: formatWithUnit(weather.windSpeed, 'km/h', 1),
+          note: '10 m Hoehe',
+        },
+        {
+          label: 'ET0',
+          value: formatWithUnit(weather.et0mm, 'mm', 2),
+          note: 'Referenz-ET0',
+        },
+        {
+          label: 'UV-Index',
+          value: Number.isFinite(weather.uvIndex) ? weather.uvIndex.toFixed(1) : '\u2013',
+          note: 'Stundenwert',
+        },
+      ]
+    : []
+
   return (
     <section className="page dashboard">
       <header className="page__header">
@@ -75,12 +139,14 @@ const Dashboard = () => {
           <p className="status-chip__value">{statusSnapshot.overall}</p>
         </article>
         <article className="status-chip">
-          <p className="status-chip__label">Ø Bodenfeuchte</p>
+          <p className="status-chip__label">Į~ Bodenfeuchte</p>
           <p className="status-chip__value">{statusSnapshot.avgMoisture}%</p>
         </article>
         <article className="status-chip">
           <p className="status-chip__label">Regenwahrscheinlichkeit</p>
-          <p className="status-chip__value">{statusSnapshot.rainChance}%</p>
+          <p className="status-chip__value">
+            {weatherLoading ? '...' : `${rainChanceValue}%`}
+          </p>
         </article>
       </section>
 
@@ -125,27 +191,32 @@ const Dashboard = () => {
         <header className="panel__header">
           <h2>Wetter & Regen</h2>
           <p className="panel__hint">
-            Detailansicht fuer Regenwahrscheinlichkeit, Temperatur, Wind und Hinweise (Dummy).
+            Detailansicht fuer Regenwahrscheinlichkeit, Temperatur, Wind und Hinweise (Open-Meteo).
           </p>
+          <div className="api-indicator">
+            <span className={`api-indicator__dot ${weatherError ? 'is-error' : 'is-ok'}`} />
+            <span>{weatherError ? 'Open-Meteo nicht erreichbar' : 'Open-Meteo aktiv'}</span>
+          </div>
         </header>
+        {weatherLoading && <p className="panel__hint">Lade Wetterdaten ...</p>}
+        {weatherError && !weatherLoading && (
+          <p className="panel__hint">Fehler beim Laden: {weatherError}</p>
+        )}
+        {weather && (
+          <p className="panel__hint">
+            Letztes Update: {minutesSinceUpdate} min
+          </p>
+        )}
         <div className="weather-grid">
-          <article className="weather-card">
-            <p className="weather-card__label">Regenwahrscheinlichkeit</p>
-            <p className="weather-card__value">{statusSnapshot.rainChance}%</p>
-            <p className="weather-card__note">Niederschlag in den naechsten 6h gering.</p>
-          </article>
-          <article className="weather-card">
-            <p className="weather-card__label">Temperatur</p>
-            <p className="weather-card__value">{statusSnapshot.temp}&deg;C</p>
-            <p className="weather-card__note">
-              Leicht bewoelkt, gute Bedingungen fuer Bewaesserung.
-            </p>
-          </article>
-          <article className="weather-card">
-            <p className="weather-card__label">Wind</p>
-            <p className="weather-card__value">{statusSnapshot.wind} km/h</p>
-            <p className="weather-card__note">Windstill genug fuer genaue Sensorwerte.</p>
-          </article>
+          {!weatherLoading &&
+            !weatherError &&
+            weatherCards.map((item) => (
+              <article className="weather-card" key={item.label}>
+                <p className="weather-card__label">{item.label}</p>
+                <p className="weather-card__value">{item.value}</p>
+                <p className="weather-card__note">{item.note}</p>
+              </article>
+            ))}
         </div>
       </section>
     </section>
