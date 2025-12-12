@@ -7,10 +7,10 @@ import useWeather from '../hooks/useWeather'
 
 const statusSnapshot = {
   overall: 'Stabil',
-  avgMoisture: 43,
-  rainChance: 32,
-  temp: 18,
-  wind: 9,
+  avgMoisture: 0,
+  rainChance: 0,
+  temp: 0,
+  wind: 0,
 }
 
 const gardenBeds = [
@@ -66,14 +66,14 @@ const Dashboard = () => {
     isLoading: weatherLoading,
     error: weatherError,
     now,
+    lastUpdatedAt,
   } = useWeather()
   const rainChanceValue = weather
     ? Math.round(weather.maxPrecip24h)
     : statusSnapshot.rainChance
 
-  const minutesSinceUpdate = weather
-    ? Math.max(0, Math.round((now - new Date(weather.timestamp).getTime()) / 60000))
-    : null
+  const minutesSinceUpdate =
+    lastUpdatedAt != null ? Math.max(0, Math.round((now - lastUpdatedAt) / 60000)) : null
 
   const formatNumber = (value, digits = 1) =>
     Number.isFinite(value) ? value.toFixed(digits) : '\u2013'

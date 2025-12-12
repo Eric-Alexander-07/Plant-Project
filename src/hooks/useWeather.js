@@ -9,6 +9,7 @@ function useWeather() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [now, setNow] = useState(Date.now())
+  const [lastUpdatedAt, setLastUpdatedAt] = useState(null)
 
   useEffect(() => {
     let isMounted = true
@@ -19,7 +20,11 @@ function useWeather() {
       setError(null)
       try {
         const result = await fetchWeather()
-        if (isMounted) setData(result)
+        if (isMounted) {
+          setData(result)
+          setLastUpdatedAt(Date.now()) // Zeitpunkt des letzten erfolgreichen API-Calls merken
+          setNow(Date.now()) // Timer sofort synchronisieren
+        }
       } catch (err) {
         if (isMounted) setError(err.message || 'Failed to load weather data')
       } finally {
@@ -41,7 +46,7 @@ function useWeather() {
     return () => clearInterval(tickId)
   }, [])
 
-  return { data, isLoading, error, now }
+  return { data, isLoading, error, now, lastUpdatedAt }
 }
 
 export default useWeather
