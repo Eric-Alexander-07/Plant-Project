@@ -36,6 +36,8 @@ export async function fetchWeather() {
     timezone: 'Europe/Berlin',
     hourly: HOURLY_PARAMS.join(','),
     forecast_days: '1',
+    // Wir holen Wind in m/s ab und konvertieren spaeter, damit keine zufaelligen Einheitenwechsel passieren.
+    wind_speed_unit: 'ms',
   })
 
   const url = `${OPEN_METEO_URL}?${params.toString()}`
@@ -62,7 +64,15 @@ export async function fetchWeather() {
     const idx = nextIndex >= 0 ? nextIndex : times.length - 1
     const pick = (key) => data?.hourly?.[key]?.[idx]
 
-    const windSpeedMs = Number(pick('wind_speed_10m'))
+    const windSpeedRaw = Number(pick('wind_speed_10m'))
+    const windSpeedUnit = data?.hourly_units?.wind_speed_10m
+    const windSpeedKmh = (() => {
+      if (!Number.isFinite(windSpeedRaw)) return undefined
+      if (typeof windSpeedUnit === 'string' && windSpeedUnit.includes('m/s')) {
+        return Number((windSpeedRaw * 3.6).toFixed(1))
+      }
+      return Number(windSpeedRaw.toFixed(1)) // already km/h (current API default)
+    })()
 
     // Forecast indicator: max precipitation probability in the next 24 hours (or remaining data).
     const precipSeries = data?.hourly?.precipitation_probability ?? []
@@ -79,7 +89,7 @@ export async function fetchWeather() {
       shortwaveRadiation: Number(pick('shortwave_radiation')),
       temperatureC: Number(pick('temperature_2m')),
       humidityPercent: Number(pick('relative_humidity_2m')),
-      windSpeed: Number.isFinite(windSpeedMs) ? Number((windSpeedMs * 3.6).toFixed(1)) : undefined, // convert m/s to km/h for readability
+      windSpeed: windSpeedKmh,
       et0mm: Number(pick('et0_fao_evapotranspiration')),
       uvIndex: Number(pick('uv_index')),
       maxPrecip24h: Number(maxPrecip24h),
