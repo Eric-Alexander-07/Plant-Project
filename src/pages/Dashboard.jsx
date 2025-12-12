@@ -63,7 +63,7 @@ const gardenBeds = [
 const Dashboard = () => {
   const { data: weather, isLoading: weatherLoading, error: weatherError } = useWeather()
   const rainChanceValue = weather
-    ? Math.round(weather.maxPrecip24h ?? weather.precipitationProbability)
+    ? Math.round(weather.maxPrecip24h)
     : statusSnapshot.rainChance
 
   const minutesSinceUpdate = weather

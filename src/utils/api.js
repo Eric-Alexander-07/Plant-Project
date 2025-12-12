@@ -84,7 +84,8 @@ export async function fetchWeather() {
 
     const weather = {
       timestamp: times[idx],
-      precipitationProbability: Number(pick('precipitation_probability')),
+      // Nur noch die maximale Regenwahrscheinlichkeit im 24h-Fenster relevant.
+      precipitationProbability: Number(maxPrecip24h),
       precipitationMm: Number(pick('precipitation')),
       shortwaveRadiation: Number(pick('shortwave_radiation')),
       temperatureC: Number(pick('temperature_2m')),
