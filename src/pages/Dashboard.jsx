@@ -61,16 +61,18 @@ const gardenBeds = [
 ]
 
 const Dashboard = () => {
-  const { data: weather, isLoading: weatherLoading, error: weatherError } = useWeather()
+  const {
+    data: weather,
+    isLoading: weatherLoading,
+    error: weatherError,
+    now,
+  } = useWeather()
   const rainChanceValue = weather
     ? Math.round(weather.maxPrecip24h)
     : statusSnapshot.rainChance
 
   const minutesSinceUpdate = weather
-    ? Math.max(
-        0,
-        Math.round((Date.now() - new Date(weather.timestamp).getTime()) / 60000)
-      )
+    ? Math.max(0, Math.round((now - new Date(weather.timestamp).getTime()) / 60000))
     : null
 
   const formatNumber = (value, digits = 1) =>

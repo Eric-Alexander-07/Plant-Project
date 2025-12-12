@@ -61,7 +61,10 @@ export async function fetchWeather() {
         return Number.isFinite(ts) && ts >= now
       }) ?? -1
 
-    const idx = nextIndex >= 0 ? nextIndex : times.length - 1
+    // Nutze den zuletzt verfügbaren Messzeitpunkt (<= jetzt), damit "Letztes Update" sinnvoll ist.
+    let idx = times.length - 1
+    if (nextIndex === 0) idx = 0
+    else if (nextIndex > 0) idx = nextIndex - 1
     const pick = (key) => data?.hourly?.[key]?.[idx]
 
     const windSpeedRaw = Number(pick('wind_speed_10m'))
@@ -99,6 +102,11 @@ export async function fetchWeather() {
     if (Object.values(weather).some((value) => value === undefined || Number.isNaN(value))) {
       throw new Error('Incomplete weather data received')
     }
+
+    console.info('[Open-Meteo] Wetterdaten geladen', {
+      timestamp: weather.timestamp,
+      location: '49.8099,9.1560',
+    })
 
     return weather
   } catch (error) {
